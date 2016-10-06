@@ -1,5 +1,12 @@
 from setuptools import setup
 
+CLASSIFIERS = [
+    'License :: OSI Approved :: BSD License',
+    'Programming Language :: Python :: 2',
+    'Programming Language :: Python :: 3',
+    'Topic :: Scientific/Engineering',
+    ]
+
 setup(
     name='noisy',
     version='0.1',
@@ -10,4 +17,5 @@ setup(
     install_requires=[
         'numpy',
         ],
+    classifiers=CLASSIFIERS
     )
