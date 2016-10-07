@@ -9,7 +9,7 @@ The latest release can be found on PyPI and installed with `pip install noisy`.
 
 ## Documentation
 
-The latest version of the documentation can be found at [ReadTheDocs](http://noisy.readthedocs.io/en/latest/).
+The latest version of the documentation can be found at http://fridh.github.io/noisy/.
 
 
 ## License
