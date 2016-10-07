@@ -9,7 +9,7 @@ CLASSIFIERS = [
 
 setup(
     name='noisy',
-    version='0.1',
+    version='0.1.1',
     description='Noise of different colors',
     author='Frederik Rietdijk',
     author_email='fridh@fridh.nl',
