@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>&lt;no title&gt; &#8212; noisy 0.1.1 documentation</title>
+    <title>Noisy &#8212; noisy 0.1.1 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -37,7 +37,128 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  
+  <span class="target" id="module-noisy"></span><div class="section" id="noisy">
+<h1>Noisy<a class="headerlink" href="#noisy" title="Permalink to this headline">¶</a></h1>
+<p>Different types of noise are available. The following table lists the color
+of noise and how the power and power density change per octave.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="21%" />
+<col width="54%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Color</th>
+<th class="head">Power</th>
+<th class="head">Power density</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>White</td>
+<td>+3 dB</td>
+<td>0 dB</td>
+</tr>
+<tr class="row-odd"><td>Pink</td>
+<td>0 dB</td>
+<td>-3 dB</td>
+</tr>
+<tr class="row-even"><td>Blue</td>
+<td>+6 dB</td>
+<td>+3 dB</td>
+</tr>
+<tr class="row-odd"><td>Brown</td>
+<td>-3 dB</td>
+<td>-6 dB</td>
+</tr>
+<tr class="row-even"><td>Violet</td>
+<td>+9 dB</td>
+<td>+6 dB</td>
+</tr>
+</tbody>
+</table>
+<p>Curves corresponding to the noise color are generated in frequency domain.</p>
+<dl class="function">
+<dt id="noisy.blue">
+<code class="descclassname">noisy.</code><code class="descname">blue</code><span class="sig-paren">(</span><em>ntaps</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/noisy.html#blue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#noisy.blue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute impulse response for blue noise.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ntaps</strong> &#8211; Length of impulse response.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Impulse response of length <cite>ntaps</cite>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="noisy.brown">
+<code class="descclassname">noisy.</code><code class="descname">brown</code><span class="sig-paren">(</span><em>ntaps</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/noisy.html#brown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#noisy.brown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute impulse response for brown noise.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ntaps</strong> &#8211; Length of impulse response.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Impulse response of length <cite>ntaps</cite>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="noisy.pink">
+<code class="descclassname">noisy.</code><code class="descname">pink</code><span class="sig-paren">(</span><em>ntaps</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/noisy.html#pink"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#noisy.pink" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute impulse response for pink noise.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ntaps</strong> &#8211; Length of impulse response.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Impulse response of length <cite>ntaps</cite>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="noisy.violet">
+<code class="descclassname">noisy.</code><code class="descname">violet</code><span class="sig-paren">(</span><em>ntaps</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/noisy.html#violet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#noisy.violet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute impulse response for violet noise.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ntaps</strong> &#8211; Length of impulse response.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Impulse response of length <cite>ntaps</cite>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="noisy.white">
+<code class="descclassname">noisy.</code><code class="descname">white</code><span class="sig-paren">(</span><em>ntaps</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/noisy.html#white"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#noisy.white" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute impulse response for white noise.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ntaps</strong> &#8211; Length of impulse response.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Impulse response of length <cite>ntaps</cite>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
 
           </div>
         </div>
@@ -72,7 +193,7 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2016, Frederik Rietdijk.
+      &copy;1970, Frederik Rietdijk.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.6</a>

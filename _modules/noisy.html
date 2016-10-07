@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>noisy &#8212; noisy 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="noisy 0.1.1 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for noisy</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Noisy</span>
+<span class="sd">*****</span>
+
+<span class="sd">Different types of noise are available. The following table lists the color</span>
+<span class="sd">of noise and how the power and power density change per octave.</span>
+
+<span class="sd">====== ===== =============</span>
+<span class="sd">Color  Power Power density</span>
+<span class="sd">====== ===== =============</span>
+<span class="sd">White  +3 dB  0 dB</span>
+<span class="sd">Pink    0 dB -3 dB</span>
+<span class="sd">Blue   +6 dB +3 dB</span>
+<span class="sd">Brown  -3 dB -6 dB</span>
+<span class="sd">Violet +9 dB +6 dB</span>
+<span class="sd">====== ===== =============</span>
+
+<span class="sd">Curves corresponding to the noise color are generated in frequency domain.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="k">def</span> <span class="nf">_ms</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Mean value of signal `x` squared.</span>
+
+<span class="sd">    :param x: Dynamic quantity.</span>
+<span class="sd">    :returns: Mean square of `x`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mf">2.0</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">_normalize</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Normalize power in y.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">y</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">_ms</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="p">)</span>
+
+
+<div class="viewcode-block" id="white"><a class="viewcode-back" href="../index.html#noisy.white">[docs]</a><span class="k">def</span> <span class="nf">white</span><span class="p">(</span><span class="n">ntaps</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute impulse response for white noise.</span>
+
+<span class="sd">    :param ntaps: Length of impulse response.</span>
+<span class="sd">    :returns: Impulse response of length `ntaps`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ir</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ntaps</span><span class="p">)</span>
+    <span class="n">ir</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">ir</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="pink"><a class="viewcode-back" href="../index.html#noisy.pink">[docs]</a><span class="k">def</span> <span class="nf">pink</span><span class="p">(</span><span class="n">ntaps</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute impulse response for pink noise.</span>
+
+<span class="sd">    :param ntaps: Length of impulse response.</span>
+<span class="sd">    :returns: Impulse response of length `ntaps`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfftfreq</span><span class="p">(</span><span class="n">ntaps</span><span class="p">)</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">_normalize</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">irfft</span><span class="p">(</span><span class="n">H</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="blue"><a class="viewcode-back" href="../index.html#noisy.blue">[docs]</a><span class="k">def</span> <span class="nf">blue</span><span class="p">(</span><span class="n">ntaps</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute impulse response for blue noise.</span>
+
+<span class="sd">    :param ntaps: Length of impulse response.</span>
+<span class="sd">    :returns: Impulse response of length `ntaps`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfftfreq</span><span class="p">(</span><span class="n">ntaps</span><span class="p">)</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">_normalize</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">irfft</span><span class="p">(</span><span class="n">H</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="brown"><a class="viewcode-back" href="../index.html#noisy.brown">[docs]</a><span class="k">def</span> <span class="nf">brown</span><span class="p">(</span><span class="n">ntaps</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute impulse response for brown noise.</span>
+
+<span class="sd">    :param ntaps: Length of impulse response.</span>
+<span class="sd">    :returns: Impulse response of length `ntaps`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfftfreq</span><span class="p">(</span><span class="n">ntaps</span><span class="p">)</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">f</span>
+    <span class="n">H</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">_normalize</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">irfft</span><span class="p">(</span><span class="n">H</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="violet"><a class="viewcode-back" href="../index.html#noisy.violet">[docs]</a><span class="k">def</span> <span class="nf">violet</span><span class="p">(</span><span class="n">ntaps</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute impulse response for violet noise.</span>
+
+<span class="sd">    :param ntaps: Length of impulse response.</span>
+<span class="sd">    :returns: Impulse response of length `ntaps`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfftfreq</span><span class="p">(</span><span class="n">ntaps</span><span class="p">)</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">f</span>
+    <span class="n">H</span> <span class="o">=</span> <span class="n">_normalize</span><span class="p">(</span><span class="n">H</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">irfft</span><span class="p">(</span><span class="n">H</span><span class="p">))</span></div>
+
+
+<span class="n">COLORS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;white&#39;</span> <span class="p">:</span>   <span class="n">white</span><span class="p">,</span>
+    <span class="s1">&#39;pink&#39;</span>  <span class="p">:</span>   <span class="n">pink</span><span class="p">,</span>
+    <span class="s1">&#39;blue&#39;</span>  <span class="p">:</span>   <span class="n">blue</span><span class="p">,</span>
+    <span class="s1">&#39;brown&#39;</span> <span class="p">:</span>   <span class="n">brown</span><span class="p">,</span>
+    <span class="s1">&#39;violet&#39;</span><span class="p">:</span>   <span class="n">violet</span><span class="p">,</span>
+    <span class="p">}</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;1970, Frederik Rietdijk.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
