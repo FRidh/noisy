@@ -2,7 +2,7 @@
 , numpy
 }:
 
-pythonPackages.buildPythonPackage rec {
+buildPythonPackage rec {
   name = "noisy-${version}";
   version = "dev";
 
