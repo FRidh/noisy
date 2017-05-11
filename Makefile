@@ -1,6 +1,6 @@
 DOCS=doc
 
-.PHONY: docs
+.PHONY: docs clean
 
 docs:
 	cd $(DOCS) && $(MAKE) clean && $(MAKE) html
@@ -11,5 +11,9 @@ docs-online: docs
 sdist:
 	python3 setup.py sdist
 
-release: sdist docs-online
-	python3 setup.py upload
+clean:
+	rm -rf dist
+
+release: docs-online
+	python3 setup.py sdist upload
+	$(MAKE) clean
